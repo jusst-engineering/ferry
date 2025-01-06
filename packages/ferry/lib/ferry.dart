@@ -26,6 +26,7 @@ class Client extends TypedLinkWithCacheAndRequestController {
   final Map<String, Function> updateCacheHandlers;
   final Map<OperationType, FetchPolicy> defaultFetchPolicies;
   final bool addTypename;
+  final bool refetchPaginationSupport;
 
   @override
   late Cache cache;
@@ -45,13 +46,15 @@ class Client extends TypedLinkWithCacheAndRequestController {
     this.updateCacheHandlers = const {},
     this.defaultFetchPolicies = const {},
     this.addTypename = true,
+    this.refetchPaginationSupport = true,
   }) {
     this.cache = cache ??= _defaultCache = Cache();
     this.requestController = requestController ??=
         _defaultRequestController = StreamController.broadcast();
     _typedLink = TypedLink.from([
       ErrorTypedLink(),
-      RequestControllerTypedLink(this.requestController),
+      if (refetchPaginationSupport)
+        RequestControllerTypedLink(this.requestController),
       if (addTypename) AddTypenameTypedLink(),
       if (updateCacheHandlers.isNotEmpty)
         UpdateCacheTypedLink(
