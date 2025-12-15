@@ -1,3 +1,19 @@
+## 0.12.0+3
+
+ - Support `build ^4.0.0` / `build_runner ^2.10.3` (requires Dart `^3.7.0`).
+
+## 0.12.0+2
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 0.12.0-dev.0+2
+
+ - Update a dependency to the latest release.
+
+## 0.12.0+1
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
 ## 0.12.0-dev.0+1
 
  - **REFACTOR**(ferry_generator): Add const constructor to AddTypenameField.
