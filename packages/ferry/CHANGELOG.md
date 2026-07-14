@@ -1,3 +1,59 @@
+## 0.16.2-dev.4
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**(ferry_generator): upgrade to latest gql_code_builder (#637).
+
+## 0.16.2-dev.3
+
+ - **FEAT**(ferry_generator): move to dart_style 3.0.0 (#632).
+
+## 0.16.2-dev.2
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**(ferry): propagate .done from websockets to returned stream. This this disables refetching/paging for subscriptions and thus a breaking change. See #629.
+
+## 0.16.2-dev.1
+
+ - **FEAT**(ferry): expose store flush() in isolate client (#628).
+
+## 0.16.2-dev.0
+
+ - **FEAT**(ferry): add evict operation to ferry isolate client.
+
+## 0.16.1
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 0.16.1-dev.2
+
+ - Update a dependency to the latest release.
+
+## 0.16.1-dev.1
+
+ - **FEAT**(ferry): add evict operation to ferry isolate client.
+
+## 0.16.1-dev.0+3
+
+ - Update a dependency to the latest release.
+
+## 0.16.1+2
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 0.16.1-dev.0+2
+
+ - Update a dependency to the latest release.
+
+## 0.16.1+1
+
+ - Update a dependency to the latest release.
+
+## 0.16.1
+
+ - Bump "ferry" to `0.16.1`.
+
 ## 0.16.0-dev.5
 
  - **REFACTOR**(ferry): Use const to list.
