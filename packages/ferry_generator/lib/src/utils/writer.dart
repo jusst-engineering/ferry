@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 final DartFormatter _dartfmt = DartFormatter(
   languageVersion: DartFormatter.latestShortStyleLanguageVersion,
@@ -13,6 +14,7 @@ Future<void> writeDocument(
   Library library,
   Allocator allocator,
   BuildStep buildStep,
+  bool format,
 ) {
   if (library.body.isEmpty) return Future.value(null);
 
@@ -32,6 +34,7 @@ Future<void> writeDocument(
     outputId,
     '// GENERATED CODE - DO NOT MODIFY BY HAND\n'
             '// ignore_for_file: type=lint\n\n' +
+        (format ? '' : '// dart format off\n\n') +
         formatted,
   );
 }

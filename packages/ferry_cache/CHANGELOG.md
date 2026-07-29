@@ -1,3 +1,36 @@
+## 0.10.1-dev.0+1
+
+ - Update a dependency to the latest release.
+
+## 0.10.1
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 0.10.1-dev.1
+
+ - Update a dependency to the latest release.
+
+## 0.10.1-dev.0
+
+ - **FEAT**(ferr_cache): add evict operation.
+
+## 0.10.0+1
+
+ - Update a dependency to the latest release.
+
+## 0.10.0
+
+## 0.10.0-dev.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**(ferry_generator): update to gql_code_builders 0.12.0. this extracted the common serializers to a separate package. clients need to add gql_code_builder_serializers to their dependencies if they use ferry_generator. (#601).
+ - **BREAKING** **CHORE**(deps): upgrade rxdart to v0.28.0 (#612).
+
+## 0.9.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
 ## 0.9.0-dev.4
 
  - Update a dependency to the latest release.

@@ -1,3 +1,32 @@
+## 0.14.0-dev.3
+
+ - **CHORE**: update `build` to `^4.0.0` (#653).
+
+## 0.14.0-dev.2
+
+ - **FIX**(generator): support analyzer v7 APIs (#650).
+
+## 0.14.0-dev.1
+
+> Note: This release has breaking changes.
+
+ - **FIX**(ferry_generator): pre-create allocators to ensure consistent imports (#644).
+ - **FEAT**(ferry_generator): add option to disable formatting (#640).
+ - **BREAKING** **FEAT**(ferry_generator): upgrade to build 3.0.0 and gql_code_builder 0.15.0 (#646).
+
+## 0.14.0-dev.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**(ferry_generator): upgrade to latest gql_code_builder (#637).
+ - **BREAKING** **FEAT**(ferry_generator): upgrade gql_code_builder to 0.14.0.
+
+## 0.13.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**(ferry_generator): upgrade gql_code_builder to 0.14.0.
+
 ## 0.12.0+5
 
  - Support `analyzer 12.x`.
