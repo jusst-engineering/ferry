@@ -190,8 +190,16 @@ class GraphqlBuilder implements Builder {
         schemaOutputAsset.path,
       );
 
-      await writeDocument(
-          generatedAsset, entry.value, allocator, buildStep, config.format);
+      final allocator = GqlAllocator(
+        buildStep.inputId.uri.toString(),
+        config.sourceExtension,
+        generatedAsset.uri.toString(),
+        schemaOutputAsset.uri.toString(),
+        serialzerOutputAsset.uri.toString(),
+        config.outputDir,
+      );
+
+      await writeDocument(generatedAsset, entry.value, allocator, buildStep);
     }
   }
 }
