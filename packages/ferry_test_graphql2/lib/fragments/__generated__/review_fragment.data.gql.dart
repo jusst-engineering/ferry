@@ -13,6 +13,7 @@ abstract class GReviewFragment {
   String get G__typename;
   int get stars;
   String? get commentary;
+  Map<String, dynamic> toJson();
 }
 
 abstract class GReviewFragmentData
@@ -21,9 +22,9 @@ abstract class GReviewFragmentData
         GReviewFragment {
   GReviewFragmentData._();
 
-  factory GReviewFragmentData(
-          [void Function(GReviewFragmentDataBuilder b) updates]) =
-      _$GReviewFragmentData;
+  factory GReviewFragmentData([
+    void Function(GReviewFragmentDataBuilder b) updates,
+  ]) = _$GReviewFragmentData;
 
   static void _initializeBuilder(GReviewFragmentDataBuilder b) =>
       b..G__typename = 'Review';
@@ -38,14 +39,11 @@ abstract class GReviewFragmentData
   static Serializer<GReviewFragmentData> get serializer =>
       _$gReviewFragmentDataSerializer;
 
-  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
-        GReviewFragmentData.serializer,
-        this,
-      ) as Map<String, dynamic>);
+  @override
+  Map<String, dynamic> toJson() =>
+      (_i1.serializers.serializeWith(GReviewFragmentData.serializer, this)
+          as Map<String, dynamic>);
 
   static GReviewFragmentData? fromJson(Map<String, dynamic> json) =>
-      _i1.serializers.deserializeWith(
-        GReviewFragmentData.serializer,
-        json,
-      );
+      _i1.serializers.deserializeWith(GReviewFragmentData.serializer, json);
 }

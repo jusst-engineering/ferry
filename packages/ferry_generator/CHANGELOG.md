@@ -27,17 +27,18 @@
 
  - **BREAKING** **FEAT**(ferry_generator): upgrade gql_code_builder to 0.14.0.
 
-## 0.12.1-dev.2
+## 0.12.0+5
 
- - **FEAT**(ferry_generator): support analyzer ^7.0.0 (#635).
+ - Support `analyzer 12.x`.
+ - Require Dart `^3.10.0` for `dart_style 3.1.8` compatibility.
 
-## 0.12.1-dev.1
+## 0.12.0+4
 
- - **FEAT**(ferry_generator): allow analyzer 7.3.0 (#634).
+ - Support `analyzer 9.x` and `10.x`.
 
-## 0.12.1-dev.0
+## 0.12.0+3
 
- - **FEAT**(ferry_generator): move to dart_style 3.0.0 (#632).
+ - Support `build ^4.0.0` / `build_runner ^2.10.3` (requires Dart `^3.7.0`).
 
 ## 0.12.0+2
 

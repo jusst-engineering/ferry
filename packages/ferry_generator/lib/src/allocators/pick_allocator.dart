@@ -18,9 +18,7 @@ class PickAllocator implements Allocator {
     }
   }
 
-  static const _doNotImport = [
-    'dart:core',
-  ];
+  static const _doNotImport = ['dart:core'];
 
   @override
   String allocate(Reference reference) {
@@ -37,8 +35,11 @@ class PickAllocator implements Allocator {
       return '$alias.$symbol';
     }
 
-    _imports.update(url, (symbols) => symbols?..add(symbol),
-        ifAbsent: () => [symbol]);
+    _imports.update(
+      url,
+      (symbols) => symbols?..add(symbol),
+      ifAbsent: () => [symbol],
+    );
 
     return symbol;
   }
@@ -50,7 +51,7 @@ class PickAllocator implements Allocator {
             ? Directive.import(u.key)
             : Directive.import(u.key, show: u.value!),
       )
-      .followedBy(aliasedImports.entries.map(
-        (e) => Directive.import(e.key, as: e.value),
-      ));
+      .followedBy(
+        aliasedImports.entries.map((e) => Directive.import(e.key, as: e.value)),
+      );
 }

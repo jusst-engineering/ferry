@@ -17,9 +17,7 @@ import 'src/utils/add_introspection.dart';
 import 'src/codegen/req.dart';
 import 'src/allocators/gql_allocator.dart';
 
-Builder graphqlBuilder(
-  BuilderOptions options,
-) =>
+Builder graphqlBuilder(BuilderOptions options) =>
     GraphqlBuilder(options.config);
 
 class GraphqlBuilder implements Builder {
@@ -32,16 +30,17 @@ class GraphqlBuilder implements Builder {
     dataExtension,
     varExtension,
     reqExtension,
-    schemaExtension
+    schemaExtension,
   ];
 
   @override
   Map<String, List<String>> get buildExtensions => {
-        '{{dir}}/{{file}}${config.sourceExtension}': [
-          ...localFileExtensions.map(
-              (extension) => '{{dir}}/${config.outputDir}/{{file}}$extension')
-        ],
-      };
+    '{{dir}}/{{file}}${config.sourceExtension}': [
+      ...localFileExtensions.map(
+        (extension) => '{{dir}}/${config.outputDir}/{{file}}$extension',
+      ),
+    ],
+  };
 
   @override
   FutureOr<void> build(BuildStep buildStep) async {
@@ -54,8 +53,11 @@ class GraphqlBuilder implements Builder {
       for (final schemaId in config.schemaIds!) {
         if (docPackage == schemaId.package &&
             docDirPath.contains(p.dirname(schemaId.path))) {
-          schema =
-              await readDocument(buildStep, config.sourceExtension, schemaId);
+          schema = await readDocument(
+            buildStep,
+            config.sourceExtension,
+            schemaId,
+          );
           _schemaId = schemaId;
           break;
         }
@@ -64,7 +66,10 @@ class GraphqlBuilder implements Builder {
 
     if (schema == null && config.schemaId != null) {
       schema = await readDocument(
-          buildStep, config.sourceExtension, config.schemaId);
+        buildStep,
+        config.sourceExtension,
+        config.schemaId,
+      );
       _schemaId = config.schemaId!;
     }
 
@@ -76,18 +81,38 @@ class GraphqlBuilder implements Builder {
             config.whenExtensionConfig.generateWhenExtensionMethod) &&
         !config.shouldAddTypenames) {
       throw StateError(
-          'When extensions require add_typenames to be true. Consider setting add_typenames to true in your build.yaml or disabling when_extensions in your build.yaml.');
+        'When extensions require add_typenames to be true. Consider setting add_typenames to true in your build.yaml or disabling when_extensions in your build.yaml.',
+      );
     }
 
     final triStateValueConfig = config.triStateOptionalsConfig;
 
-    final schemaOutputAsset =
-        outputAssetId(_schemaId, schemaExtension, config.outputDir);
+    final schemaOutputAsset = outputAssetId(
+      _schemaId,
+      schemaExtension,
+      config.outputDir,
+    );
 
     final schemaUrl = schemaOutputAsset.uri.toString();
-    final serializerOutputAsset =
-        AssetId(buildStep.inputId.package, schemaOutputAsset.path);
+    final serializerOutputAsset = AssetId(
+      buildStep.inputId.package,
+      schemaOutputAsset.path,
+    );
     final serializerUrl = serializerOutputAsset.uri.toString();
+    final schemaAllocator = GqlAllocator(
+      buildStep.inputId.uri.toString(),
+      config.sourceExtension,
+      outputAssetId(
+        buildStep.inputId,
+        schemaExtension,
+        config.outputDir,
+      ).uri.toString(),
+      schemaUrl,
+      serializerUrl,
+      config.outputDir,
+    );
+
+    final varAllocator = schemaAllocator;
 
     final dataToVarsMode = config.dataToJsonMode;
 
@@ -123,12 +148,14 @@ class GraphqlBuilder implements Builder {
         config.dataClassConfig,
       ),
       varExtension: buildVarLibrary(
-          doc,
-          addTypenames(schema),
-          p.basename(generatedFilePath(buildStep.inputId, varExtension)),
-          config.typeOverrides,
-          triStateValueConfig,
-          config.shouldGenerateVarsCreateFactories),
+        doc,
+        addTypenames(schema),
+        p.basename(generatedFilePath(buildStep.inputId, varExtension)),
+        config.typeOverrides,
+        varAllocator,
+        triStateValueConfig,
+        config.shouldGenerateVarsCreateFactories,
+      ),
       reqExtension: buildReqLibrary(
         doc,
         p.basename(generatedFilePath(buildStep.inputId, reqExtension)),
@@ -147,13 +174,32 @@ class GraphqlBuilder implements Builder {
     };
 
     for (var entry in libs.entries) {
-      final generatedAsset =
-          outputAssetId(buildStep.inputId, entry.key, config.outputDir);
+      final generatedAsset = outputAssetId(
+        buildStep.inputId,
+        entry.key,
+        config.outputDir,
+      );
+      final schemaOutputAsset = outputAssetId(
+        _schemaId,
+        schemaExtension,
+        config.outputDir,
+      );
 
-      final allocator = allocators[entry.key]!;
+      final serialzerOutputAsset = AssetId(
+        buildStep.inputId.package,
+        schemaOutputAsset.path,
+      );
 
-      await writeDocument(
-          generatedAsset, entry.value, allocator, buildStep, config.format);
+      final allocator = GqlAllocator(
+        buildStep.inputId.uri.toString(),
+        config.sourceExtension,
+        generatedAsset.uri.toString(),
+        schemaOutputAsset.uri.toString(),
+        serialzerOutputAsset.uri.toString(),
+        config.outputDir,
+      );
+
+      await writeDocument(generatedAsset, entry.value, allocator, buildStep);
     }
   }
 }
